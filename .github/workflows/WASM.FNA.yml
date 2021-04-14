@@ -17,7 +17,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: UWP ${{ matrix.variant }} on ${{ matrix.os }}
     steps:
+      - name: Check out source
+        uses: actions/checkout@v1
       - uses: mymindstorm/setup-emsdk@v7
-
       - name: Verify
         run: emcc -v    
+      - name: Create the fnalibs repo directory
+        shell: bash
+        run: |
+          mkdir fnalibs
+          cd fnalibs
+          
