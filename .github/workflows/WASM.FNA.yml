@@ -36,7 +36,6 @@ jobs:
           emconfigure ../configure --host=wasm32-unknown-emscripten --disable-assembly --disable-threads --disable-cpuinfo CFLAGS="-O2 -Wno-warn-absolute-paths -Wdeclaration-after-statement -Werror=declaration-after-statement" --prefix="$PWD/emscripten-sdl2-installed"
           emmake make
           emmake make install
-          cd ../..
       - name: FNA3D
         shell: bash
         run: |         
@@ -46,14 +45,23 @@ jobs:
           cd build
           emcmake cmake .. -DSDL2_INCLUDE_DIRS=/home/runner/work/FNA-WASM-Build/FNA-WASM-Build/SDL/include -DSDL2_LIBRARIES=/home/runner/work/FNA-WASM-Build/FNA-WASM-Build/SDL/emscripten-build/emscripten-sdl2-installed/lib/libSDL2.a
           emmake make
-          cd ../..          
+      - name: FAudio
+        shell: bash
+        run: |           
+          git clone https://github.com/FNA-XNA/FAudio
+          cd FAudio
+          mkdir build
+          cd build
+          emcmake cmake .. -DSDL2_INCLUDE_DIRS=/home/runner/work/FNA-WASM-Build/FNA-WASM-Build/include -DSDL2_LIBRARIES=/home/runner/work/FNA-WASM-Build/FNA-WASM-Build/emscripten-build/emscripten-sdl2-installed/lib/libSDL2.a
+          emmake make
       - name: Copy Binaries (with new names)
         shell: bash
         run: |
           mkdir Binaries
           cp ./SDL/emscripten-build/emscripten-sdl2-installed/lib/libSDL2.a Binaries/SDL2.a
           cp ./FNA3D/build/libFNA3D.a Binaries/FNA3D.a
-          cp ./FNA3D/build/libmojoshader.a Binaries/libmojoshader.a          
+          cp ./FNA3D/build/libmojoshader.a Binaries/libmojoshader.a    
+          cp ./FAudio/build/libFAudio.a Binaries/FAudio.a
           7z a FNA-WASM.Binaries.zip Binaries/*
       - name: Archive ${{ matrix.variant }} WASM archive on ${{ matrix.os }}
         uses: actions/upload-artifact@master
