@@ -22,11 +22,9 @@ jobs:
       - uses: mymindstorm/setup-emsdk@v7
       - name: Verify
         run: emcc -v    
-      - name: Create the fnalibs repo directory
+      - name: Check working directory
         shell: bash
         run: |
-          mkdir fnalibs
-          cd fnalibs
           pwd
       - name: SDL2    
         shell: bash
@@ -46,7 +44,7 @@ jobs:
           cd FNA3D
           mkdir build
           cd build
-          emcmake cmake .. -DSDL2_INCLUDE_DIRS=/home/runner/work/FNA-WASM-Build/FNA-WASM-Build/fnalibs/SDL/include -DSDL2_LIBRARIES=/home/runner/work/FNA-WASM-Build/FNA-WASM-Build/fnalibs/SDL/emscripten-build/emscripten-sdl2-installed/lib/libSDL2.a
+          emcmake cmake .. -DSDL2_INCLUDE_DIRS=/home/runner/work/FNA-WASM-Build/FNA-WASM-Build/SDL/include -DSDL2_LIBRARIES=/home/runner/work/FNA-WASM-Build/FNA-WASM-Build/SDL/emscripten-build/emscripten-sdl2-installed/lib/libSDL2.a
           emmake make
           cd ../..          
       - name: Copy Binaries (with new names)
