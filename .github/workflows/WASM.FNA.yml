@@ -38,3 +38,14 @@ jobs:
           emmake make
           emmake make install
           cd ../..
+      - name: Copy Binaries (with new names)
+        shell: bash
+        run: |
+          mkdir Binaries
+          cp ./SDL/emscripten-build/emscripten-sdl2-installed/lib/libSDL2.a Binaries/SDL2.a
+          7z a FNA-WASM.Binaries.zip Binaries/*
+      - name: Archive ${{ matrix.variant }} UWP archive on ${{ matrix.os }}
+        uses: actions/upload-artifact@master
+        with:
+          name: UWP Libraries for ${{ matrix.variant }} on ${{ matrix.os }}
+          path: FNA-WASM.Binaries.zip  
