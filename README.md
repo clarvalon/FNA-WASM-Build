@@ -4,10 +4,10 @@
 
 This repo is for automating the build of WebAssembly (WASM) native libraries for [FNA](https://fna-xna.github.io/), including:
 
-* [FNA3D.dll](https://github.com/FNA-XNA/FNA3D) - 3D graphics library for FNA.
-* [FAudio.dll](https://github.com/FNA-XNA/FAudio) - XAudio reimplementation for FNA.
-* [SDL2.dll](https://github.com/libsdl-org/SDL) - Simple DirectMedia Layer.
-* ~[libtheorafile.dll](https://github.com/FNA-XNA/Theorafile) - Ogg Theora videos decoder library.~ (not yet implemented)
+* [FNA3D.a](https://github.com/FNA-XNA/FNA3D) - 3D graphics library for FNA.
+* [FAudio.a](https://github.com/FNA-XNA/FAudio) - XAudio reimplementation for FNA.
+* [SDL2.a](https://github.com/libsdl-org/SDL) - Simple DirectMedia Layer.
+* ~[libtheorafile.a](https://github.com/FNA-XNA/Theorafile) - Ogg Theora videos decoder library.~ (not yet implemented)
 
 There is currently just one workflow:
 
