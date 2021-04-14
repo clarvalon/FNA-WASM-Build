@@ -27,4 +27,14 @@ jobs:
         run: |
           mkdir fnalibs
           cd fnalibs
-          
+      - name: SDL2    
+        shell: bash
+        run: |
+          git clone https://github.com/libsdl-org/SDL
+          cd SDL
+          mkdir emscripten-build
+          cd emscripten-build
+          emconfigure ../configure --host=wasm32-unknown-emscripten --disable-assembly --disable-threads --disable-cpuinfo CFLAGS="-O2 -Wno-warn-absolute-paths -Wdeclaration-after-statement -Werror=declaration-after-statement" --prefix="$PWD/emscripten-sdl2-installed"
+          emmake make
+          emmake make install
+          cd ../..
