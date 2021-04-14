@@ -1,0 +1,23 @@
+name: UWP Build (FNA3D)
+
+on: 
+  push:
+    branches: 
+      - master
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+      
+jobs:
+  windows:
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+        variant: [Release]
+    runs-on: ${{ matrix.os }}
+    name: UWP ${{ matrix.variant }} on ${{ matrix.os }}
+    steps:
+      - uses: mymindstorm/setup-emsdk@v7
+
+      - name: Verify
+        run: emcc -v    
