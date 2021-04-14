@@ -15,7 +15,7 @@ jobs:
         os: [ubuntu-18.04]
         variant: [Release]
     runs-on: ${{ matrix.os }}
-    name: UWP ${{ matrix.variant }} on ${{ matrix.os }}
+    name: WASM ${{ matrix.variant }} on ${{ matrix.os }}
     steps:
       - name: Check out source
         uses: actions/checkout@v1
@@ -38,14 +38,26 @@ jobs:
           emmake make
           emmake make install
           cd ../..
+      - name: FNA3D
+        shell: bash
+        run: |         
+          git clone --recursive https://github.com/FNA-XNA/FNA3D
+          cd FNA3D
+          mkdir build
+          cd build
+          emcmake cmake .. -DSDL2_INCLUDE_DIRS=fnalibs/SDL/include -DSDL2_LIBRARIES=fnalibs/SDL/emscripten-build/emscripten-sdl2-installed/lib/libSDL2.a
+          emmake make
+          cd ../..          
       - name: Copy Binaries (with new names)
         shell: bash
         run: |
           mkdir Binaries
           cp ./SDL/emscripten-build/emscripten-sdl2-installed/lib/libSDL2.a Binaries/SDL2.a
+          cp ./FNA3D/build/libFNA3D.a Binaries/FNA3D.a
+          cp ./FNA3D/build/libmojoshader.a Binaries/libmojoshader.a          
           7z a FNA-WASM.Binaries.zip Binaries/*
-      - name: Archive ${{ matrix.variant }} UWP archive on ${{ matrix.os }}
+      - name: Archive ${{ matrix.variant }} WASM archive on ${{ matrix.os }}
         uses: actions/upload-artifact@master
         with:
-          name: UWP Libraries for ${{ matrix.variant }} on ${{ matrix.os }}
+          name: WASM Libraries for ${{ matrix.variant }} on ${{ matrix.os }}
           path: FNA-WASM.Binaries.zip  
