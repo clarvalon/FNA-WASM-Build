@@ -46,7 +46,7 @@ jobs:
           cd FNA3D
           mkdir build
           cd build
-          emcmake cmake .. -DSDL2_INCLUDE_DIRS=fnalibs/SDL/include -DSDL2_LIBRARIES=fnalibs/SDL/emscripten-build/emscripten-sdl2-installed/lib/libSDL2.a
+          emcmake cmake .. -DSDL2_INCLUDE_DIRS=/home/runner/work/FNA-WASM-Build/FNA-WASM-Build/fnalibs/SDL/include -DSDL2_LIBRARIES=/home/runner/work/FNA-WASM-Build/FNA-WASM-Build/fnalibs/SDL/emscripten-build/emscripten-sdl2-installed/lib/libSDL2.a
           emmake make
           cd ../..          
       - name: Copy Binaries (with new names)
