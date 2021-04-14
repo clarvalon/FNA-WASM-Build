@@ -1,4 +1,4 @@
-name: UWP Build (FNA3D)
+name: WASM Build (FNA)
 
 on: 
   push:
