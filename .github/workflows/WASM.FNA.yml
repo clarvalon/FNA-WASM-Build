@@ -27,6 +27,7 @@ jobs:
         run: |
           mkdir fnalibs
           cd fnalibs
+          pwd
       - name: SDL2    
         shell: bash
         run: |
