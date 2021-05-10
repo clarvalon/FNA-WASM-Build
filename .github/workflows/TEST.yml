@@ -36,16 +36,17 @@ jobs:
         run: |         
           git clone https://github.com/FNA-XNA/Theorafile.git
           cd Theorafile
-          mkdir build
-          cd build
-          emcmake cmake .. -DSDL2_INCLUDE_DIRS=/home/runner/work/FNA-WASM-Build/FNA-WASM-Build/SDL/include -DSDL2_LIBRARIES=/home/runner/work/FNA-WASM-Build/FNA-WASM-Build/SDL/emscripten-build/emscripten-sdl2-installed/lib/libSDL2.a
+          mkdir emscripten-build
+          cd emscripten-build
+          emconfigure ../configure --host=wasm32-unknown-emscripten --disable-assembly --disable-threads --disable-cpuinfo CFLAGS="-O2 -Wno-warn-absolute-paths -Wdeclaration-after-statement -Werror=declaration-after-statement" --prefix="$PWD/emscripten-sdl2-installed"
           emmake make
+          emmake make install
       - name: Copy Binaries (with new names)
         shell: bash
         run: |
           mkdir Binaries
           cp ./SDL/emscripten-build/emscripten-sdl2-installed/lib/libSDL2.a Binaries/SDL2.a
-          cp ./Theorafile/build/libtheorafile.a Binaries/libtheorafile.a
+          cp ./Theorafile/emscripten-build//emscripten-sdl2-installed/lib/libtheorafile.a Binaries/libtheorafile.a
           7z a FNA-WASM.Binaries.zip Binaries/*
       - name: Archive ${{ matrix.variant }} WASM archive on ${{ matrix.os }}
         uses: actions/upload-artifact@master
